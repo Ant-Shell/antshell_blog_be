@@ -2,20 +2,25 @@
   "name": "antshell_blog_be",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "build": "npx tsc",
     "start": "dotenvx run -- node dist/index.js",
     "dev": "dotenvx run -- nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint" 
+    "lint": "npx eslint"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anthony Shellman",
   "license": "ISC",
-  "description": "",
+  "description": "blog",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.19.0",
-    "express": "^4.21.1"
+    "@types/pg": "^8.11.10",
+    "express": "^4.21.1",
+    "kysely": "^0.27.4",
+    "pg": "^8.13.1",
+    "pg-types": "^4.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
