@@ -1,5 +1,3 @@
-const prefix = process.env
-
 interface Env {
   database: string | undefined
   host: string | undefined
@@ -9,11 +7,11 @@ interface Env {
   password: string | undefined
 }
 
-export const devEnv: Env = {
-  database: prefix.DATABASE,
-  host: prefix.HOST,
-  user: prefix.USER,
-  port: Number(prefix.PORT),
-  max: Number(prefix.MAX),
-  password: prefix.PASSWORD
+export const Env: Env = {
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: Number(process.env.DB_PORT),
+  max: Number(process.env.DB_MAX),
+  password: process.env.DB_PASSWORD
 }
