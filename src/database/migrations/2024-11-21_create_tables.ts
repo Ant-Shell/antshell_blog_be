@@ -1,12 +1,6 @@
 import { Kysely, sql } from 'kysely'
 
 export async function up(db: Kysely<any>): Promise<void> {
-
-  const dbInfo = await db.selectFrom('pg_database').select('datname').execute();
-  console.log('Connected to database:', dbInfo);  
-
-  try {
-  console.log('Schema: Starting categories migration');
   await db.schema
     .createTable('public.categories')
     .addColumn('id', 'serial', (col) => col.primaryKey())
@@ -16,11 +10,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('created_at', 'timestamp', (col) => col.defaultTo(sql`now()`))
     .addColumn('updated_at', 'timestamp', (col) => col.defaultTo(null))
     .execute()
-    console.log('Schema: Categories migration completed successfully')
-  } catch(error) {
-    console.error('Schema: Error in categories migration:', error);
-    throw error;
-  }
 
   await db.schema
     .createTable('public.posts')
@@ -80,48 +69,11 @@ export async function up(db: Kysely<any>): Promise<void> {
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
-  console.log('Schema: Dropping tables ...')
-
-  try {
-    await db.schema.dropTable('public.post_categories').execute();
-  } catch (error) {
-    console.error('Error while dropping table:', error)
-  }
-
-  try {
-    await db.schema.dropTable('public.post_tags').execute()
-  } catch (error) {
-    console.error('Error while dropping table:', error)
-  }
-
-  try {
-    await db.schema.dropTable('public.images').execute()
-  } catch (error) {
-    console.error('Error while dropping table:', error)
-  }
-
-  try {
-    await db.schema.dropTable('public.categories').execute()
-  } catch (error) {
-    console.error('Error while dropping table:', error)
-  }
-  
-  try {
-    await db.schema.dropTable('public.posts').execute()
-  } catch (error) {
-    console.error('Error while dropping table:', error)
-  }
-
-  try {
-    await db.schema.dropTable('public.tags').execute()
-  } catch (error) {
-    console.error('Error while dropping table:', error)
-  }
-
-  try {
-    await db.schema.dropTable('public.users').execute()
-  } catch (error) {
-    console.error('Error while dropping table:', error)
-  }
-  console.log('Schema: Tables should be dropped now - please verify')
+  await db.schema.dropTable('public.post_categories').execute();
+  await db.schema.dropTable('public.post_tags').execute()
+  await db.schema.dropTable('public.images').execute()
+  await db.schema.dropTable('public.categories').execute()
+  await db.schema.dropTable('public.posts').execute()
+  await db.schema.dropTable('public.tags').execute()
+  await db.schema.dropTable('public.users').execute()
 }
