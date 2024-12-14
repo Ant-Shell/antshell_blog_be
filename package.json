@@ -4,9 +4,11 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
+    "migrationsdev": "dotenvx run -f .env.development -- npx tsx src/database/migrations-runner.ts up",
+    "rollbackdev": "dotenvx run -f .env.development -- npx tsx src/database/migrations-runner.ts down",
     "build": "npx tsc",
     "start": "dotenvx run -- node dist/index.js",
-    "dev": "dotenvx run -- nodemon src/index.ts",
+    "dev": "dotenvx run -f .env.development -- nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint"
   },
