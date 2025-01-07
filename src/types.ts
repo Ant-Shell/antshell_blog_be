@@ -19,15 +19,18 @@ export interface BPDB {
 
 export interface CategoryTable {
   id: Generated<number>
-  categoryId: number
   name: string
-  description: string
+  slug: string
+  description: string | null
+  createdAt: ColumnType<Date, string | undefined, never>
+  updatedAt: ColumnType<Date, string | undefined>
 }
 
 export type Category = Selectable<CategoryTable>
 export type NewCategory = Insertable<CategoryTable>
 export type CategoryUpdate = Updateable<CategoryTable>
 
+// Not using this yet - will need to research how to handle adding comments
 export interface CommentTable {
   id: Generated<number>
   commentId: number
@@ -41,6 +44,7 @@ export type Comment = Selectable<CommentTable>
 export type NewComment = Insertable<CommentTable>
 export type CommentUpdate = Updateable<CommentTable>
 
+// Not using this yet - will need to research how to handle adding files to posts
 export interface FileTable {
   id: Generated<number>
   fileId: number
@@ -81,7 +85,6 @@ export type PostTagUpdate = Updateable<PostTagTable>
 
 export interface TagTable {
   id: Generated<number>
-  tagId: number
   name: string
 }
 
@@ -101,3 +104,9 @@ export interface UserTable {
 export type User = Selectable<UserTable>
 export type NewUser = Insertable<UserTable>
 export type UserUpdate = Updateable<UserTable>
+
+// Junction table
+export interface PostTagsTable {
+  postId: number;
+  tagId: number;
+}
