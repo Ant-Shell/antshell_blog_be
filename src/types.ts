@@ -61,13 +61,10 @@ export type FileUpdate = Updateable<FileTable>
 
 export interface PostTable {
   id: Generated<number>
-  postId: number
-  categoryId: number
-  userId: number
   title: string
   content: string
-  postDate: ColumnType<Date, string | undefined, never>
-  updateDate: ColumnType<Date, string | undefined>
+  createdAt: ColumnType<Date, string | undefined, never>
+  updatedAt: ColumnType<Date, string | undefined>
 }
 
 export type Post = Selectable<PostTable>
