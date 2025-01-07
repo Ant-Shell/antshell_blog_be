@@ -61,6 +61,7 @@ export type FileUpdate = Updateable<FileTable>
 
 export interface PostTable {
   id: Generated<number>
+  userId: number
   title: string
   content: string
   createdAt: ColumnType<Date, string | undefined, never>
