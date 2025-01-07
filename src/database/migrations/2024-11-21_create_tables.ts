@@ -72,11 +72,11 @@ export async function up(db: Kysely<any>): Promise<void> {
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
-  await db.schema.dropTable('public.users').execute()
   await db.schema.dropTable('public.post_categories').execute();
   await db.schema.dropTable('public.post_tags').execute()
   await db.schema.dropTable('public.images').execute()
   await db.schema.dropTable('public.categories').execute()
   await db.schema.dropTable('public.posts').execute()
   await db.schema.dropTable('public.tags').execute()
+  await db.schema.dropTable('public.users').execute()
 }
