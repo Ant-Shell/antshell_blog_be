@@ -2,6 +2,15 @@ import { Kysely, sql } from 'kysely'
 
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
+  .createTable('public.users')
+  .addColumn('id', 'serial', (col) => col.primaryKey())
+  .addColumn('user_id', 'uuid', (col) => col.notNull().defaultTo(sql`gen_random_uuid()`))
+  .addColumn('username', 'varchar', (col) => col.notNull().unique())
+  .addColumn('password', 'varchar', (col) => col.notNull())
+  .addColumn('admin', 'boolean', (col) => col.notNull().defaultTo(sql`false`))
+  .execute()
+
+  await db.schema
     .createTable('public.categories')
     .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('name', 'varchar', (col) => col.notNull().unique())
@@ -16,6 +25,9 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('id', 'serial', (col) => col.primaryKey())
     .addColumn('title', 'varchar', (col) => col.notNull())
     .addColumn('content', 'text', (col) => col.notNull())
+    .addColumn('user_id', 'integer', (col) =>
+      col.references('users.id').onDelete('cascade').notNull()
+    )
     .addColumn('created_at', 'timestamp', (col) => col.defaultTo(sql`now()`))
     .addColumn('updated_at', 'timestamp', (col) => col.defaultTo(null))
     .execute()
@@ -56,15 +68,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('type', 'varchar', (col) => col.notNull())
     .addColumn('alt_text', 'text', (col) => col.defaultTo(null))
     .addColumn('created_at', 'timestamp', (col) => col.defaultTo(sql`now()`))
-    .execute()
-
-  await db.schema
-    .createTable('public.users')
-    .addColumn('id', 'serial', (col) => col.primaryKey())
-    .addColumn('user_id', 'uuid', (col) => col.notNull().defaultTo(sql`gen_random_uuid()`))
-    .addColumn('username', 'varchar', (col) => col.notNull().unique())
-    .addColumn('password', 'varchar', (col) => col.notNull())
-    .addColumn('admin', 'boolean', (col) => col.notNull().defaultTo(sql`false`))
     .execute()
 }
 
